@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>GPIO Home Monitor</title>
+<style type=text/css>
+table {
+    /* border-collapse: collapse; */
+    border: 2px solid black;
+    width: 75%;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+th {
+    padding: 8px;
+    height: 50px;
+    font-size: 150%;
+    background-color: #000;
+    color: #fff;
+}
+td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    /*background-color: #0f0;*/
+    font-size: 250%;
+    font-weight: 900;
+    width: 33.3%;
+}
+</style>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript">
+setInterval(function(){
+    $.ajax({ url: "http://10.0.0.115/zones.json", success: function(data){
+        //console.log("Recieved JSON Data");
+        //$("#log").html("<PRE>" + JSON.stringify(data, null, 4) + "</PRE>");
+        //$("#msg").show();
+        $("#back").html(data[1].state);
+        if (data[1].state == "Open") {
+                $("#back").css({"background-color":"f00", "color":"fff"});
+        } else {
+                $("#back").css({"background-color":"0f0", "color":"000"});
+        }
+        $("#back").show();
+        $("#front").html(data[2].state);
+        if (data[2].state == "Open") {
+                $("#front").css({"background-color":"f00", "color":"fff"});
+        } else {
+                $("#front").css({"background-color":"0f0", "color":"000"});
+        }
+        $("#front").show();
+        $("#garage").html(data[3].state);
+        if (data[3].state == "Open") {
+                $("#garage").css({"background-color":"f00", "color":"fff"});
+        } else {
+                $("#garage").css({"background-color":"0f0", "color":"000"});
+        }
+        $("#garage").show();
+    }, dataType: "json"});
+}, 750);
+</script>
+</head>
+<body>
+<table>
+ <tr>
+  <th>FRONT DOOR</th>
+  <th>BACK DOOR</th>
+  <th>GARAGE DOOR</th>
+ </tr>
+ <tr>
+  <td id="front"> </td>
+  <td id="back"> </td>
+  <td id="garage"> </td>
+ </tr>
+</table>
+<div id="log"></div>
+</body>
+</html>
