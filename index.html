@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>GPIO Home Monitor</title>
+<title>Raspberry PI GPIO Home Security Sensors Monitor</title>
 <style type=text/css>
 table {
     /* border-collapse: collapse; */
@@ -33,10 +33,8 @@ td {
 <script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript">
 setInterval(function(){
-    $.ajax({ url: "http://10.0.0.115/zones.json", success: function(data){
-        //console.log("Recieved JSON Data");
-        //$("#log").html("<PRE>" + JSON.stringify(data, null, 4) + "</PRE>");
-        //$("#msg").show();
+    $.ajax({ url: "http://<Raspberry IP Address>/zones.json", success: function(data){
+        // This is ugly. Needs to just be 1 loop.
         $("#back").html(data[1].state);
         if (data[1].state == "Open") {
                 $("#back").css({"background-color":"f00", "color":"fff"});
