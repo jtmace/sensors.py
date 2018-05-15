@@ -12,9 +12,9 @@ for pin in PINS:
 time_ = (datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 zones = {
-        '1':{'name':'Back','state':'Closed','curr':0, 'prev': 0, 'pin':7, 'chang                                                                                                             e': time_ },
-        '2':{'name':'Front','state':'Closed','curr':0, 'prev': 0, 'pin':8, 'chan                                                                                                             ge': time_},
-        '3':{'name':'Garage','state':'Closed','curr':0, 'prev': 0, 'pin':11, 'ch                                                                                                             ange': time_ }
+        '1':{'name':'Back','state':'Closed','curr':0, 'prev': 0, 'pin':7, 'change': time_ },
+        '2':{'name':'Front','state':'Closed','curr':0, 'prev': 0, 'pin':8, 'change': time_},
+        '3':{'name':'Garage','state':'Closed','curr':0, 'prev': 0, 'pin':11, 'change': time_ }
 }
 
 print json.dumps(zones)
@@ -28,22 +28,22 @@ try:
                 zones[x]['curr'] = GPIO.input(zones[x]['pin'])
                 time_ = (datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
-                if ( zones[x]['curr'] == zones[x]['prev'] and zones[x]['curr'] =                                                                                                             = 0 ) :
+                if ( zones[x]['curr'] == zones[x]['prev'] and zones[x]['curr'] == 0 ) :
                         zones[x]['state'] = 'Closed'
-                if ( zones[x]['curr'] == zones[x]['prev'] and zones[x]['curr'] =                                                                                                             = 1 ) :
+                if ( zones[x]['curr'] == zones[x]['prev'] and zones[x]['curr'] == 1 ) :
                         zones[x]['state'] = 'Open'
 
                 if ( zones[x]['curr'] != zones[x]['prev'] ) :
                         if ( zones[x]['curr'] == 1 ):
                                 zones[x]['state'] = 'Open'
                                 zones[x]['change'] = time_
-                                output = '%s - The %s door is now open' % (datet                                                                                                             ime.now().strftime("%Y-%m-%d %H:%M:%S"),zones[x]['name'])
+                                output = '%s - The %s door is now open' % (datetime.now().strftime("%Y-%m-%d %H:%M:%S"),zones[x]['name'])
                                 os.system('echo %s >> /root/log.txt' % output)
                                 print (output)
                         if ( zones[x]['curr'] == 0 ):
                                 zones[x]['state'] = 'Closed'
                                 zones[x]['change'] = time_
-                                output = '%s - The %s door is now closed' % (dat                                                                                                             etime.now().strftime("%Y-%m-%d %H:%M:%S"), zones[x]['name'])
+                                output = '%s - The %s door is now closed' % (datetime.now().strftime("%Y-%m-%d %H:%M:%S"), zones[x]['name'])
                                 os.system('echo %s >> /root/log.txt' % output)
                                 print (output)
                         changed = 1
